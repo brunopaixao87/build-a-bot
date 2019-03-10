@@ -27,4 +27,5 @@ export default {
 .robot{
   height: 300px;
 }
+
 </style>

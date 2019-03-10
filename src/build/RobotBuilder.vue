@@ -2,6 +2,11 @@
   <div>
     <div class="top-row">
       <div class="top part">
+        <!-- em caso de load uma unica vez pode utilizar a tag v-once para melhorar a performace -->
+        <div class="robot-name">
+          {{selectedRobot.head.title}}
+        </div>
+
         <!-- Binding sintaxe abreviada @ e :
           forma normal v-bind: e  @click
         -->
@@ -227,5 +232,12 @@ export default {
 }
 .right .next-selector {
   right: -3px;
+}
+
+.robot-name{
+  position: absolute;
+  top: -25px;
+  text-align: center;
+  width: 100%;
 }
 </style>
