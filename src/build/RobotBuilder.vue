@@ -2,9 +2,13 @@
   <div>
     <div class="top-row">
       <div class="top part">
-        <!-- em caso de load uma unica vez pode utilizar a tag v-once para melhorar a performace -->
+        <!-- em caso de load uma unica vez pode utilizar a
+        diretiva v-once para melhorar a performace -->
         <div class="robot-name">
           {{selectedRobot.head.title}}
+          <!-- Diretivas condicionais
+           v-if v-show(v-show display none) -->
+          <span v-if="selectedRobot.head.onSale" class="sale" >Sale!</span>
         </div>
 
         <!-- Binding sintaxe abreviada @ e :
@@ -240,4 +244,9 @@ export default {
   text-align: center;
   width: 100%;
 }
+
+.sale {
+  color: red;
+}
+
 </style>
