@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="content">
+    <button class="button-add-to-cart" @click="addToCart()">Add to Cart</button>
     <div class="top-row">
       <div class="top part">
         <!-- em caso de load uma unica vez pode utilizar a
-        diretiva v-once para melhorar a performace -->
+        diretiva v-once para melhorar a performace-->
         <div class="robot-name">
           {{selectedRobot.head.title}}
           <!-- Diretivas condicionais
-           v-if v-show(v-show display none) -->
-          <span v-if="selectedRobot.head.onSale" class="sale" >Sale!</span>
+          v-if v-show(v-show display none)-->
+          <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
         </div>
 
         <!-- Binding sintaxe abreviada @ e :
@@ -43,6 +44,23 @@
         <button @click="selectNextBase()" class="next-selector">&#9658;</button>
       </div>
     </div>
+    <div>
+      <h1>Cart</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Robot</th>
+            <th class="cost">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(robot, index) in cart" :key="index">
+            <td>{{robot.head.title}}</td>
+            <td class="cost">{{robot.cost}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -64,6 +82,7 @@ export default {
   data() {
     return {
       availableParts,
+      cart: [],
       selectedHeadIndex: 0,
       selectedLeftArmsIndex: 0,
       selectedTorsoIndex: 0,
@@ -83,6 +102,15 @@ export default {
     },
   },
   methods: {
+    addToCart() {
+      const robot = this.selectedRobot;
+      const cost = robot.head.cost
+        + robot.leftArm.cost
+        + robot.torso.cost
+        + robot.rightArm.cost
+        + robot.base.cost;
+      this.cart.push(Object.assign({}, robot, { cost }));
+    },
     selectNextHead() {
       this.selectedHeadIndex = getNextValidIndex(
         this.selectedHeadIndex,
@@ -238,7 +266,7 @@ export default {
   right: -3px;
 }
 
-.robot-name{
+.robot-name {
   position: absolute;
   top: -25px;
   text-align: center;
@@ -249,4 +277,25 @@ export default {
   color: red;
 }
 
+.content {
+  position: relative;
+}
+
+.button-add-to-cart {
+  position: absolute;
+  right: 30px;
+  width: 220px;
+  padding: 3px;
+  font-size: 16px;
+}
+
+td, th {
+  text-align: left;
+  padding: 5px;
+  padding-right: 20px;
+}
+
+.cost {
+  text-align: right;
+}
 </style>
