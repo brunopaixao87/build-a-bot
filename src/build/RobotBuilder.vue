@@ -2,7 +2,8 @@
   <div class="content">
     <button class="button-add-to-cart" @click="addToCart()">Add to Cart</button>
     <div class="top-row">
-      <div class="top part">
+      <!--  condicional class, :class[nomeFuncaoCriadaNoComputed] ou :style -->
+      <div class="top part" :class="{'sale-border': selectedRobot.head.onSale}">
         <!-- em caso de load uma unica vez pode utilizar a
         diretiva v-once para melhorar a performace-->
         <div class="robot-name">
@@ -297,5 +298,9 @@ td, th {
 
 .cost {
   text-align: right;
+}
+
+.sale-border{
+  border: 3px solid red;
 }
 </style>

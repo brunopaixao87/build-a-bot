@@ -28,12 +28,18 @@ export default {
 };
 </script>
 
+<!--  style global-->
 <style>
 
-body{
+body {
   background: linear-gradient( to bottom, #555, #999);
   background-attachment: fixed;
 }
+
+</style>
+
+<!-- scoped  style local-->
+<style scoped>
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
