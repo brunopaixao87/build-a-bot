@@ -23,6 +23,19 @@ npm run test
 ### Lints and fixes files
 ```
 npm run lint
+
+```
+###NOTES
+```
+Adcionando sass ao projeto
+npm i node-sass sass-loader --save-dev 
+
+Lifecycle vue
+https://alligator.io/vuejs/component-lifecycle/
+https://br.vuejs.org/v2/guide/instance.html
+beforeCreate()
+created()
+beforeMount()
 ```
 
 ### Customize configuration
