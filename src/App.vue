@@ -39,7 +39,7 @@ body {
 </style>
 
 <!-- scoped  style local-->
-<style scoped>
+<style lang="scss" scoped>
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
