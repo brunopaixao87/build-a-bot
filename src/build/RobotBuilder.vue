@@ -1,20 +1,21 @@
 <template>
   <div class="content">
     <div class="preview">
-      <div class="preview-content">
-        <div class="top-row">
-          <img v-if="selectedRobot.head" :src="selectedRobot.head.src"/>
+      <CollapsibleSection>
+        <div class="preview-content">
+          <div class="top-row">
+            <img v-if="selectedRobot.head" :src="selectedRobot.head.src">
+          </div>
+          <div class="middle-row">
+            <img v-if="selectedRobot.head" :src="selectedRobot.leftArm.src" class="rotate-left">
+            <img v-if="selectedRobot.head" :src="selectedRobot.torso.src">
+            <img v-if="selectedRobot.head" :src="selectedRobot.rightArm.src" class="rotate-right">
+          </div>
+          <div class="bottom-row">
+            <img v-if="selectedRobot.head" :src="selectedRobot.base.src">
+          </div>
         </div>
-        <div class="middle-row">
-          <img v-if="selectedRobot.head" :src="selectedRobot.leftArm.src" class="rotate-left"/>
-          <img v-if="selectedRobot.head" :src="selectedRobot.torso.src"/>
-          <img v-if="selectedRobot.head" :src="selectedRobot.rightArm.src" class="rotate-right"/>
-        </div>
-        <div class="bottom-row">
-          <img v-if="selectedRobot.head" :src="selectedRobot.base.src"/>
-        </div>
-      </div>
-
+      </CollapsibleSection>
       <button class="button-add-to-cart" @click="addToCart()">Add to Cart</button>
     </div>
 
@@ -31,9 +32,10 @@
         </div>
       </div>-->
       <PartSelector
-          :parts="availableParts.heads"
-           position="top"
-           @partSelected="part=>selectedRobot.head=part"/>
+        :parts="availableParts.heads"
+        position="top"
+        @partSelected="part=>selectedRobot.head=part"
+      />
     </div>
     <div class="middle-row">
       <PartSelector
@@ -83,10 +85,11 @@
 import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
+import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default {
   name: 'RobotBuilder',
-  components: { PartSelector },
+  components: { PartSelector, CollapsibleSection },
   data() {
     return {
       availableParts,
