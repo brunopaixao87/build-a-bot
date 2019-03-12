@@ -1,23 +1,22 @@
 <template>
   <div class="content">
-
     <div class="preview">
       <div class="preview-content">
         <div class="top-row">
-          <img :src="selectedRobot.head.src">
+          <img v-if="selectedRobot.head" :src="selectedRobot.head.src"/>
         </div>
         <div class="middle-row">
-          <img :src="selectedRobot.leftArm.src" class="rotate-left">
-          <img :src="selectedRobot.torso.src">
-          <img :src="selectedRobot.rightArm.src" class="rotate-right">
+          <img v-if="selectedRobot.head" :src="selectedRobot.leftArm.src" class="rotate-left"/>
+          <img v-if="selectedRobot.head" :src="selectedRobot.torso.src"/>
+          <img v-if="selectedRobot.head" :src="selectedRobot.rightArm.src" class="rotate-right"/>
         </div>
         <div class="bottom-row">
-          <img :src="selectedRobot.base.src">
+          <img v-if="selectedRobot.head" :src="selectedRobot.base.src"/>
         </div>
       </div>
-    </div>
 
-    <button class="button-add-to-cart" @click="addToCart()">Add to Cart</button>
+      <button class="button-add-to-cart" @click="addToCart()">Add to Cart</button>
+    </div>
 
     <div class="top-row">
       <!--  condicional class, :class[nomeFuncaoCriadaNoComputed] ou :style
@@ -32,10 +31,9 @@
         </div>
       </div>-->
       <PartSelector
-        :parts="availableParts.heads"
-        position="top"
-        @partSelected="part => selectedRobot.head = part"
-      />
+          :parts="availableParts.heads"
+           position="top"
+           @partSelected="part=>selectedRobot.head=part"/>
     </div>
     <div class="middle-row">
       <PartSelector
@@ -93,23 +91,20 @@ export default {
     return {
       availableParts,
       cart: [],
-      selectedRobot() {
-        return {
-          head: {},
-          leftArm: {},
-          torso: {},
-          rightArm: {},
-          base: {},
-        };
+      selectedRobot: {
+        head: {},
+        leftArm: {},
+        torso: {},
+        rightArm: {},
+        base: {},
       },
     };
   },
   mixins: [createdHookMixin],
-  computed: {},
   methods: {
     addToCart() {
       const robot = this.selectedRobot;
-      const cost =        robot.head.cost
+      const cost = robot.head.cost
         + robot.leftArm.cost
         + robot.torso.cost
         + robot.rightArm.cost
@@ -230,8 +225,7 @@ export default {
 
 .button-add-to-cart {
   position: absolute;
-  right: 30px;
-  width: 220px;
+  width: 210px;
   padding: 3px;
   font-size: 16px;
 }
