@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
 function getPreviousValidIndex(index, length) {
   const deprecatedIndex = index - 1;
   return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
@@ -20,7 +19,19 @@ function getNextValidIndex(index, length) {
 }
 
 export default {
-  props: ['parts', 'position'],
+  props: {
+    parts: {
+      type: Array,
+      required: true,
+    },
+    position: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ['left', 'right', 'top', 'bottom', 'center'].includes(value);
+      },
+    },
+  },
   data() {
     return { selectedPartIndex: 0 };
   },
