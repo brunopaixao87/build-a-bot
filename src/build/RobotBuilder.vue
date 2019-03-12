@@ -2,48 +2,26 @@
   <div class="content">
     <button class="button-add-to-cart" @click="addToCart()">Add to Cart</button>
     <div class="top-row">
-      <!--  condicional class, :class[nomeFuncaoCriadaNoComputed] ou :style -->
+      <!--  condicional class, :class[nomeFuncaoCriadaNoComputed] ou :style
       <div class="top part" :class="{'sale-border': selectedRobot.head.onSale}">
-        <!-- em caso de load uma unica vez pode utilizar a
-        diretiva v-once para melhorar a performace-->
+         em caso de load uma unica vez pode utilizar a
+        diretiva v-once para melhorar a performac
         <div class="robot-name">
           {{selectedRobot.head.title}}
-          <!-- Diretivas condicionais
-          v-if v-show(v-show display none)-->
+          Diretivas condicionais
+          v-if v-show(v-show display none)
           <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
         </div>
-
-        <!-- Binding sintaxe abreviada @ e :
-          forma normal v-bind: e  @click
-        -->
-        <img :src="selectedRobot.head.src" title="head">
-        <button @click="selectPreviuosHead()" class="prev-selector">&#9668;</button>
-        <button @click="selectNextHead()" class="next-selector">&#9658;</button>
-      </div>
+      </div>-->
+      <PartSelector/>
     </div>
     <div class="middle-row">
-      <div class="left part">
-        <img :src="selectedRobot.leftArm.src" title="left arm">
-        <button @click="selectPreviousLeftArms()" class="prev-selector">&#9650;</button>
-        <button @click="selectNextLeftArms()" class="next-selector">&#9660;</button>
-      </div>
-      <div class="center part">
-        <img :src="selectedRobot.torso.src" title="left arm">
-        <button @click="selectPreviousTorso()" class="prev-selector">&#9668;</button>
-        <button @click="selectNextTorso()" class="next-selector">&#9658;</button>
-      </div>
-      <div class="right part">
-        <img :src="selectedRobot.rightArm.src" title="left arm">
-        <button @click="selectPreviousRigthArms()" class="prev-selector">&#9650;</button>
-        <button @click="selectNextRigthArms()" class="next-selector">&#9660;</button>
-      </div>
+      <PartSelector/>
+      <PartSelector/>
+      <PartSelector/>
     </div>
     <div class="bottom-row">
-      <div class="bottom part">
-        <img :src="selectedRobot.base.src" title="left arm">
-        <button @click="selectPreviousBase()" class="prev-selector">&#9668;</button>
-        <button @click="selectNextBase()" class="next-selector">&#9658;</button>
-      </div>
+      <PartSelector/>
     </div>
     <div>
       <h1>Cart</h1>
@@ -68,42 +46,28 @@
 <script>
 import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
-
-function getPreviousValidIndex(index, length) {
-  const deprecatedIndex = index - 1;
-  return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
-}
-
-function getNextValidIndex(index, length) {
-  const incrementedIndex = index + 1;
-  return incrementedIndex > length - 1 ? 0 : incrementedIndex;
-}
+import PartSelector from './PartSelector.vue';
 
 export default {
   name: 'RobotBuilder',
+  components: { PartSelector },
   data() {
     return {
       availableParts,
       cart: [],
-      selectedHeadIndex: 0,
-      selectedLeftArmsIndex: 0,
-      selectedTorsoIndex: 0,
-      selectedRightArmsIndex: 0,
-      selectedBaseIndex: 0,
+      selectedRobot() {
+        return {
+          head: {},
+          leftArm: {},
+          torso: {},
+          rightArm: {},
+          base: {},
+        };
+      },
     };
   },
   mixins: [createdHookMixin],
-  computed: {
-    selectedRobot() {
-      return {
-        head: availableParts.heads[this.selectedHeadIndex],
-        leftArm: availableParts.arms[this.selectedLeftArmsIndex],
-        torso: availableParts.torsos[this.selectedTorsoIndex],
-        rightArm: availableParts.arms[this.selectedRightArmsIndex],
-        base: availableParts.bases[this.selectedBaseIndex],
-      };
-    },
-  },
+  computed: {},
   methods: {
     addToCart() {
       const robot = this.selectedRobot;
@@ -113,66 +77,6 @@ export default {
         + robot.rightArm.cost
         + robot.base.cost;
       this.cart.push(Object.assign({}, robot, { cost }));
-    },
-    selectNextHead() {
-      this.selectedHeadIndex = getNextValidIndex(
-        this.selectedHeadIndex,
-        availableParts.heads.length,
-      );
-    },
-    selectPreviuosHead() {
-      this.selectedHeadIndex = getPreviousValidIndex(
-        this.selectedHeadIndex,
-        availableParts.heads.length,
-      );
-    },
-    selectNextLeftArms() {
-      this.selectedLeftArmsIndex = getNextValidIndex(
-        this.selectedLeftArmsIndex,
-        availableParts.arms.length,
-      );
-    },
-    selectPreviousLeftArms() {
-      this.selectedLeftArmsIndex = getPreviousValidIndex(
-        this.selectedLeftArmsIndex,
-        availableParts.arms.length,
-      );
-    },
-    selectNextTorso() {
-      this.selectedTorsoIndex = getPreviousValidIndex(
-        this.selectedTorsoIndex,
-        availableParts.torsos.length,
-      );
-    },
-    selectPreviousTorso() {
-      this.selectedTorsoIndex = getPreviousValidIndex(
-        this.selectedTorsoIndex,
-        availableParts.torsos.length,
-      );
-    },
-    selectNextRigthArms() {
-      this.selectedRightArmsIndex = getPreviousValidIndex(
-        this.selectedRightArmsIndex,
-        availableParts.arms.length,
-      );
-    },
-    selectPreviousRigthArms() {
-      this.selectedRightArmsIndex = getPreviousValidIndex(
-        this.selectedRightArmsIndex,
-        availableParts.arms.length,
-      );
-    },
-    selectNextBase() {
-      this.selectedBaseIndex = getPreviousValidIndex(
-        this.selectedBaseIndex,
-        availableParts.bases.length,
-      );
-    },
-    selectPreviousBase() {
-      this.selectedBaseIndex = getPreviousValidIndex(
-        this.selectedBaseIndex,
-        availableParts.bases.length,
-      );
     },
   },
 };
@@ -185,7 +89,7 @@ export default {
   height: 165px;
   border: 3px solid #aaa;
 }
-.part  {
+.part {
   img {
     width: 165px;
   }
@@ -294,7 +198,8 @@ export default {
   font-size: 16px;
 }
 
-td, th {
+td,
+th {
   text-align: left;
   padding: 5px;
   padding-right: 20px;
@@ -304,7 +209,7 @@ td, th {
   text-align: right;
 }
 
-.sale-border{
+.sale-border {
   border: 3px solid red;
 }
 </style>
