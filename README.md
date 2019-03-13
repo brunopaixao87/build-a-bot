@@ -40,6 +40,7 @@ beforeMount()
 Duas formas de utilizar router link
 <router-link to="/build">
 <router-link :to="{name: 'Home'}" >
+exact add no router-link para css assim a examente a rota ativa
 ```
 
 ### Customize configuration
