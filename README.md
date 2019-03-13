@@ -36,6 +36,10 @@ https://br.vuejs.org/v2/guide/instance.html
 beforeCreate()
 created()
 beforeMount()
+
+Duas formas de utilizar router link
+<router-link to="/build">
+<router-link :to="{name: 'Home'}" >
 ```
 
 ### Customize configuration
