@@ -63,6 +63,7 @@ export default new Router({
     props: true,
     beforeEnter(to, from, next) {
       const isValidId = Number.isInteger(Number(to.params.id));
+      next(isValidId);
     },
   }],
 });
