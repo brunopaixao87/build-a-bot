@@ -12,6 +12,11 @@ export default new Vuex.Store({
       state.cart.push(robot);
     },
   },
+  actions: {
+    getParts({ commit }) {
+
+    },
+  },
   getters: {
     cartSaleItems(state) {
       return state.cart.filter(item => item.head.onSale);
