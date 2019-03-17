@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div v-if="availableParts" class="content">
     <div class="preview">
       <CollapsibleSection>
         <div class="preview-content">
@@ -65,27 +65,30 @@
 </template>
 
 <script>
-import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default {
   name: 'RobotBuilder',
+  created() {
+    this.$store.dispatch('robots/getParts');
+  },
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
       next(true);
     } else {
       /* eslint no-alert: 0 */
       /* eslint no-restricted-globals: 0 */
-      const response = confirm('You have not added your robot to you cart, are you sure you want to leave?');
+      const response = confirm(
+        'You have not added your robot to you cart, are you sure you want to leave?',
+      );
       next(response);
     }
   },
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
-      availableParts,
       addedToCart: false,
       cart: [],
       selectedRobot: {
@@ -98,6 +101,11 @@ export default {
     };
   },
   mixins: [createdHookMixin],
+  computed: {
+    availableParts() {
+      return this.$store.state.robots.parts;
+    },
+  },
   methods: {
     addToCart() {
       const robot = this.selectedRobot;
@@ -106,7 +114,8 @@ export default {
         + robot.torso.cost
         + robot.rightArm.cost
         + robot.base.cost;
-      this.$store.commit('addRobotToCar', Object.assign({}, robot, { cost }));
+      this.$store.dispatch('robots/addRobotToCar', Object.assign({}, robot, { cost }))
+        .then(() => this.$router.push('/cart'));
       this.addedToCart = true;
     },
   },
