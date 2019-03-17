@@ -41,6 +41,12 @@ Duas formas de utilizar router link
 <router-link to="/build">
 <router-link :to="{name: 'Home'}" >
 exact add no router-link para css assim a examente a rota ativa
+
+npm run build -> default npm run build -- --mode=production
+
+npm run build -- --mode=development
+npm run build -- --mode=staging
+No arquivo de env exceto a var NODE_ENV todas as outras que forem criadas deve começar com VUE_APP...
 ```
 
 ### Customize configuration
